@@ -20,11 +20,27 @@
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app %>
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
+
+    <link rel="manifest" href="/assets/manifest.json">
+    <meta name="theme-color" content="#0d9488">
+
   </head>
 
   <body>
     <main class="container mx-auto mt-28 px-5 flex">
       <%= yield %>
     </main>
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/assets/service-worker.js')
+          .then(function(reg) {
+            console.log("Service Worker registrado!", reg);
+          })
+          .catch(function(err) {
+            console.error("Erro ao registrar o Service Worker:", err);
+          });
+      }
+    </script>
+
   </body>
 </html>
